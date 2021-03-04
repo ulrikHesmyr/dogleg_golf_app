@@ -1,3 +1,3 @@
-# dogleg_golf_app
+# Dogleg golf app
 
 Hello!
