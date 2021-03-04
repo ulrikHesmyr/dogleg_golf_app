@@ -1,21 +1,29 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+// In App.js in a new project
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+import * as React from 'react';
+import { View, Text } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+
+// Imported Screens
+import AuthStackNavigator from './src/navigators/AuthStackNavigator';
+import HomeStackNavigator from './src/navigators/HomeStackNavigator';
+import lightTheme from "./src/themes/light";
+import darkTheme from "./src/themes/dark";
+
+const RootStack = createStackNavigator();
+
+function App() {
+    return(
+        <NavigationContainer theme={lightTheme}>
+            <RootStack.Navigator screenOptions={{
+                headerShown: false,
+            }} >
+                <RootStack.Screen name={'RootStack'} component={AuthStackNavigator}/>
+                <RootStack.Screen name={'HomeStack'} component={HomeStackNavigator}/>
+            </RootStack.Navigator>
+        </NavigationContainer>
+    )
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
