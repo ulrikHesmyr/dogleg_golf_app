@@ -4,10 +4,10 @@ import { View, Text, StyleSheet } from 'react-native';
 // Imported Screens
 import TextButton from "../../components/TextButton";
 
-function HomeScreen({ navigation }) {
+function ScoreScreen({ navigation }) {
     return(
         <View style={styles.container}>
-            <Text>Dette er HomeScreen</Text>
+            <Text>Dette er ScoreScreen</Text>
         </View>
     )
 }
@@ -20,4 +20,4 @@ const styles = StyleSheet.create({
     },
 })
 
-export default HomeScreen;
+export default ScoreScreen;

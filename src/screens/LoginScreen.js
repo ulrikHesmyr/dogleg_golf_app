@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet} from 'react-native';
+import { View, StyleSheet, Text} from 'react-native';
 import {useState, createRef} from "react";
 
 // Imported Components
@@ -13,74 +13,81 @@ import Loader from '../components/Loader';
 //
 import AsyncStorage from '@react-native-community/async-storage';
 
-
 function LoginScreen({ navigation }) {
     const [userUsername, setUserUsername] = useState('');
     const [userPassword, setUserPassword] = useState('');
     const [loading, setLoading] = useState(false);
-    const [errortext, setErrortext] = useState('');
+    const [dataError, setDataError] = useState('');
 
     const passwordInputRef = createRef();
 
     const handleSubmitPress = () => {
-        setErrortext('');
+        setDataError('');
         if (!userUsername) {
-            alert('Username');
+            alert('Type in a username');
             return;
         }
         if (!userPassword) {
-            alert('Passord');
+            alert('Type in a passord');
             return;
         }
         setLoading(true);
-        let dataToSend = {username: userUsername, password: userPassword};
-        let formBody = [];
-        for (let key in dataToSend) {
-            let encodedKey = encodeURIComponent(key);
-            let encodedValue = encodeURIComponent(dataToSend[key]);
-            formBody.push(encodedKey + '=' + encodedValue);
-        }
-
-        formBody = formBody.join('&');
 
         fetch('http://localhost:3000/api/user/login', {
             method: 'POST',
-            body: formBody,
-            headers: {
-                'Content-Type':
-                    'application/json',
-            },
-        })
-            .then((response) => response.json())
-            .then((responseJson) => {
-                //Hide Loader
+            body: JSON.stringify(
+                {
+                    username: userUsername,
+                    password: userPassword,
+                }
+            ),
+            headers:{
+                'Accept': 'application/json',
+                'Content-Type':'application/json'
+            }
+        }).then(response => {
+
+
+            // Se heeeeeeeer
+
+            // Appen logger inn selv om den ikke er auth
+            // Det må fikses
+
+
+            // Tester Kode
+            if(!response.status === 'success'){
+                console.log('Ingen success')
+            }else {
+                console.log(response.status)
+            }
+            return response.json().then(responseData => {
                 setLoading(false);
-                console.log(responseJson);
+                setDataError(responseData.error); // Finn ut en måte og bare hente error
+
                 // If server response message same as Data Matched
-                if (responseJson.status === 'success') {
-                    AsyncStorage.setItem('user_id', responseJson.data.username);
-                    console.log(responseJson.data.username);
-                    navigation.replace('HomeStackNavigator');
+                if (!response.status === 'success') {
+                    console.log('Check your username or password')
                 } else {
-                    setErrortext(responseJson.msg);
-                    console.log('Please check your username or password');
+                    console.log(response.json._id, 'Test her')
+                    //AsyncStorage.setItem('user_id', responseData); // Finn ut en måte og bare hente token
+                    console.log(responseData);
+                    navigation.replace('TabStack');
                 }
             })
-            .catch((error) => {
-                //Hide Loader
-                setLoading(false);
-                console.error(error);
-            });
+                .catch((error) => {
+                    //Hide Loader
+                    setLoading(false);
+                    console.error(error);
+                });
+        })
     };
     return(
         <View style={styles.container}>
             <Loader loading={loading} />
-
-            <Error error={errortext} />
             <Heading style={styles.title}>Hook</Heading>
             <Input style={styles.input}
                    placeholder={'Username'}
-                   onChangeText={(UserUsername) => setUserUsername(UserUsername)}
+                   onChangeText={(userUsername) => setUserUsername(userUsername)}
                    returnKeyType="next"
                    onSubmitEditing={() =>
                        passwordInputRef.current &&
@@ -99,7 +106,8 @@ function LoginScreen({ navigation }) {
                    underlineColorAndroid="#f000"
                    returnKeyType="next"
             />
-            <FilledButton title={'Login'} style={styles.loginButton} onPress={() => {handleSubmitPress}} />
+            <Error error={dataError} />
+            <FilledButton title={'Login'} style={styles.loginButton} onPress={() => {handleSubmitPress()}} />
             <TextButton title={'Har du ikke bruker? Registrer deg her'} onPress={() => {navigation.navigate('Register')}} />
         </View>
     )
@@ -110,8 +118,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        padding: 20,
-        paddingBottom: 150,
+        padding: 25,
     },
 
     title: {

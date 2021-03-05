@@ -11,11 +11,11 @@ function Error({error}) {
 
 const styles = StyleSheet.create({
     container: {
-        paddingVertical: 28,
+        paddingVertical: 1,
     },
     text: {
         color: 'red',
-        fontWeight: 'bold',
+        fontWeight: '600',
     }
 
 })

@@ -1,9 +1,9 @@
 import React from 'react';
 import { StyleSheet, TextInput } from 'react-native';
 
-function Heading({style, ...props}) {
+function Input({style, ...props}) {
     return(
-        <TextInput{...props} style={[styles.input, style]}></TextInput>
+        <TextInput {...props} style={[styles.input, style]}></TextInput>
     )
 }
 
@@ -15,4 +15,4 @@ const styles = StyleSheet.create({
         borderRadius: 8,
     },
 })
-export default Heading;
+export default Input;
