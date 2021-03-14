@@ -11,7 +11,7 @@ function Error({error}) {
 
 const styles = StyleSheet.create({
     container: {
-        paddingVertical: 1,
+        paddingBottom: 20,
     },
     text: {
         color: 'red',

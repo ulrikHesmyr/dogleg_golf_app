@@ -1,18 +1,41 @@
-import React from 'react';
-import { StyleSheet, TextInput } from 'react-native';
+import React, {forwardRef} from 'react';
+import {StyleSheet, TextInput, View, Text, Dimensions} from 'react-native';
+import IconButton from "./IconButton";
 
-function Input({style, ...props}) {
+const width = Dimensions.get('window').width;
+const height = Dimensions.get('window').height;
+
+function Input({style, label, name, ref, ...props}) {
     return(
-        <TextInput {...props} style={[styles.input, style]}></TextInput>
+        <View style={styles.container}>
+            <View style={styles.labelForm}>
+                <Text style={styles.label}>{label}</Text>
+            </View>
+            <View style={styles.inputContainer}>
+                <IconButton name={name} style={{ marginVertical: 6 }}/>
+                <TextInput {...props} ref={ref} style={[style, styles.input]}></TextInput>
+            </View>
+        </View>
     )
 }
 
 const styles = StyleSheet.create({
-    input: {
-        backgroundColor: '#e8e8e8',
-        width: '100%',
-        padding: 20,
-        borderRadius: 8,
+    container: {
+        padding: 12,
     },
+    inputContainer: {
+        flexDirection: 'row'
+    },
+    input: {
+        padding: 10,
+    },
+    label: {
+        marginHorizontal: -10,
+        fontWeight: "300",
+        },
+    labelForm: {
+        flexDirection: 'row',
+        marginHorizontal: 10,
+    }
 })
-export default Input;
+export default forwardRef(Input);

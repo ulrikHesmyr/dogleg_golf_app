@@ -1,22 +1,29 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import TopNav from '../../components/TopNav';
 
-// Imported Screens
-import TextButton from "../../components/TextButton";
 
 function HomeScreen({ navigation }) {
     return(
-        <View style={styles.container}>
-            <Text>Dette er HomeScreen</Text>
+        <View>
+            <TopNav style={styles.container} />
+            <View style={styles.container}>
+                <Text>Dette er HomeScreen</Text>
+            </View>
         </View>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        alignItems: 'center',
+        flex:1,
         justifyContent: 'center',
+        alignItems: 'center',
+    },
+    closeIcon: {
+        position: 'absolute',
+        top: 60,
+        right: 30,
     },
 })
 

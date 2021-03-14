@@ -11,12 +11,11 @@ function FilledButton({ style, title, onPress}) {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#35C4FC',
         width: '100%',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: 20,
-        borderRadius: 8,
+        height: 60,
+        borderRadius: 40,
     },
     text: {
         color: 'white',

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, StyleSheet } from 'react-native';
 
-function Heading({children, style, ...props}) {
+function Heading({style, children, ...props}) {
     return(
         <Text{...props} style={[styles.title, style]}>{children}</Text>
     )
@@ -14,4 +14,5 @@ const styles = StyleSheet.create({
         color: 'black'
     }
 })
+
 export default Heading;
